@@ -16,5 +16,11 @@
   "engines": {
     "node": ">=18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/jackyxhb/create-fsd-gardener-planner.git"
+    },
+    "homepage": "https://github.com/jackyxhb/create-fsd-gardener-planner#readme",
+    "bugs": "https://github.com/jackyxhb/create-fsd-gardener-planner/issues"
 }
