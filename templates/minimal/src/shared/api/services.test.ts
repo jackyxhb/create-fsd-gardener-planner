@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest'
 import { apiClient } from './client'
 import { usersApi, todosApi } from './services'
+import type { User } from './mock-data'
 
 // Mock axios
 vi.mock('./client', () => ({
@@ -52,7 +53,7 @@ describe('API Services', () => {
         data: { data: createdUser, status: 'success' },
       })
 
-      const result = await usersApi.create(newUser as any)
+      const result = await usersApi.create(newUser as Omit<User, 'id' | 'createdAt'>)
 
       expect(result).toEqual(createdUser)
       expect(apiClient.post).toHaveBeenCalledWith('/users', newUser)

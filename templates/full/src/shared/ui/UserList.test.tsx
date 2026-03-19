@@ -1,14 +1,16 @@
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { UserList } from './UserList'
 import * as hooks from '@shared/api/hooks'
+import type { UseQueryResult } from '@tanstack/react-query'
+import type { User } from '@shared/api'
 
 vi.mock('@shared/api/hooks', () => ({
   useUsers: vi.fn(),
 }))
 
-const mockUsers = [
+const mockUsers: User[] = [
   {
     id: '1',
     name: 'Alice Johnson',
@@ -38,10 +40,12 @@ describe('UserList', () => {
       data: undefined,
       isLoading: true,
       error: null,
-    } as any)
+    } as unknown as UseQueryResult<User[], Error>)
 
     renderWithQueryClient(<UserList />)
-    expect(screen.getByRole('img', { hidden: true })).toBeInTheDocument() // loading spinner
+    // Check for loading spinner (animating SVG)
+    const spinner = document.querySelector('svg.animate-spin')
+    expect(spinner).toBeInTheDocument()
   })
 
   it('displays error message on error', () => {
@@ -50,7 +54,7 @@ describe('UserList', () => {
       data: undefined,
       isLoading: false,
       error,
-    } as any)
+    } as unknown as UseQueryResult<User[], Error>)
 
     renderWithQueryClient(<UserList />)
     expect(screen.getByText(/Error loading users/)).toBeInTheDocument()
@@ -61,7 +65,7 @@ describe('UserList', () => {
       data: [],
       isLoading: false,
       error: null,
-    } as any)
+    } as unknown as UseQueryResult<User[], Error>)
 
     renderWithQueryClient(<UserList />)
     expect(screen.getByText(/No users found/)).toBeInTheDocument()
@@ -72,7 +76,7 @@ describe('UserList', () => {
       data: mockUsers,
       isLoading: false,
       error: null,
-    } as any)
+    } as unknown as UseQueryResult<User[], Error>)
 
     renderWithQueryClient(<UserList />)
 
@@ -87,7 +91,7 @@ describe('UserList', () => {
       data: mockUsers,
       isLoading: false,
       error: null,
-    } as any)
+    } as unknown as UseQueryResult<User[], Error>)
 
     renderWithQueryClient(<UserList />)
 

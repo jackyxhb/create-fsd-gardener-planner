@@ -22,7 +22,8 @@ describe('cn', () => {
   })
 
   it('removes falsy values', () => {
-    const result = cn('px-2', false && 'py-1', null, undefined, 'text-sm')
+    const shouldInclude = false
+    const result = cn('px-2', shouldInclude && 'py-1', null, undefined, 'text-sm')
     expect(result).toBe('px-2 text-sm')
   })
 

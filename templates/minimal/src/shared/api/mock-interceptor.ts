@@ -7,7 +7,7 @@
 import type { AxiosError, AxiosResponse } from 'axios'
 import { apiClient } from './client'
 import { MOCK_USERS, MOCK_TODOS } from './mock-data'
-import type { User, Todo, ApiResponse } from './mock-data'
+import type { User, Todo } from './mock-data'
 
 // Store for mock data mutations
 let mockUsers = [...MOCK_USERS]
