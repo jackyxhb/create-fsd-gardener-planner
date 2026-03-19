@@ -1,0 +1,20 @@
+{
+  "name": "create-fsd-gardener-planner",
+  "version": "0.1.0",
+  "description": "Scaffold a Feature-Sliced Design gardener planner app with React 18, Vite, TypeScript",
+  "type": "module",
+  "bin": {
+    "create-fsd-gardener-planner": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "templates/"
+  ],
+  "dependencies": {
+    "picocolors": "^1.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT"
+}
