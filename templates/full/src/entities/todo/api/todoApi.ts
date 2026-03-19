@@ -1,5 +1,5 @@
 import { mockApiClient } from '@shared/api/mockApi'
-import type { Todo, CreateTodoDto, UpdateTodoDto } from '../model/types'
+import type { CreateTodoDto, UpdateTodoDto } from '../model/types'
 
 export const todoApi = {
   getAll: () => mockApiClient.getAll(),

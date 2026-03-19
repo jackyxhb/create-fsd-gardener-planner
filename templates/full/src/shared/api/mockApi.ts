@@ -1,24 +1,22 @@
 import type { Todo, CreateTodoDto, UpdateTodoDto } from '@entities/todo'
 
 // Mock data stored in memory
-let mockTodos: Todo[] = [
+const mockTodos: Todo[] = [
   {
     id: '1',
     title: 'Plant spring vegetables',
     description: 'Tomatoes, peppers, and cucumbers',
-    latitude: 51.5074,
-    longitude: -0.1278,
     completed: false,
-    createdAt: new Date('2024-03-01'),
+    createdAt: '2024-03-01T00:00:00Z',
+    updatedAt: '2024-03-01T00:00:00Z',
   },
   {
     id: '2',
     title: 'Water garden beds',
     description: 'Morning watering routine',
-    latitude: 51.508,
-    longitude: -0.125,
     completed: false,
-    createdAt: new Date('2024-03-05'),
+    createdAt: '2024-03-05T00:00:00Z',
+    updatedAt: '2024-03-05T00:00:00Z',
   },
 ]
 
@@ -44,14 +42,14 @@ export const mockApiClient = {
 
   async create(dto: CreateTodoDto): Promise<Todo> {
     await delay(400)
+    const now = new Date().toISOString()
     const newTodo: Todo = {
       id: String(nextId++),
       title: dto.title,
       description: dto.description || '',
-      latitude: dto.latitude || 51.5074,
-      longitude: dto.longitude || -0.1278,
       completed: false,
-      createdAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
     }
     mockTodos.push(newTodo)
     return structuredClone(newTodo)
@@ -63,7 +61,11 @@ export const mockApiClient = {
     if (index === -1) {
       throw new Error(`Todo ${id} not found`)
     }
-    mockTodos[index] = { ...mockTodos[index], ...dto }
+    mockTodos[index] = {
+      ...mockTodos[index],
+      ...dto,
+      updatedAt: new Date().toISOString(),
+    }
     return structuredClone(mockTodos[index])
   },
 

@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '@app/providers/AuthProvider'
+import { useAuth } from '@app/providers/useAuth'
 import { Button } from '@shared/ui/Button'
 import { cn } from '@shared/lib/utils'
 

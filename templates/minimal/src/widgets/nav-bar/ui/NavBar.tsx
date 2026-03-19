@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuth } from '@app/providers/AuthProvider'
+import { useAuth } from '@app/providers/useAuth'
 import { Button } from '@shared/ui/Button'
 
 export function NavBar() {
