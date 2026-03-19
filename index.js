@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import pc from 'picocolors'
 import { execSync } from 'node:child_process'
-import { readFileSync, writeFileSync, cpSync } from 'node:fs'
+import { readFileSync, writeFileSync, cpSync, existsSync } from 'node:fs'
 import { resolve, join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -37,7 +37,7 @@ async function main() {
     // Copy template
     console.log(pc.dim('  ⏳ Copying template...'))
     const dest = resolve(process.cwd(), projectName)
-    cpSync(TEMPLATE_DIR, dest, { recursive: true })
+    cpSync(TEMPLATE_DIR, dest, { recursive: true, force: true })
 
     // Update package.json name
     console.log(pc.dim('  ⏳ Configuring project...'))
@@ -45,6 +45,42 @@ async function main() {
     const pkg = JSON.parse(readFileSync(pkgPath, 'utf-8'))
     pkg.name = projectName
     writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n')
+
+    // Ensure .gitignore exists (npm doesn't copy dotfiles by default)
+    const gitignorePath = join(dest, '.gitignore')
+    if (!existsSync(gitignorePath)) {
+      const gitignoreContent = `# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment
+.env
+.env.local
+.env.*.local
+`
+      writeFileSync(gitignorePath, gitignoreContent)
+    }
 
     // Install dependencies
     console.log(pc.dim('  ⏳ Installing dependencies...'))

@@ -1,0 +1,10 @@
+# Ignore development files
+test-*
+.git
+.gitattributes
+CHECKLIST.md
+IMPROVEMENTS.md
+IMPLEMENTATION_SUMMARY.md
+
+# But DO include .gitignore files in templates (using ! prefix)
+!templates/**/.gitignore
